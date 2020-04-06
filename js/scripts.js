@@ -1,3 +1,14 @@
+//chart.js color
+window.chartColors = {
+  red: 'rgb(255, 99, 132)',
+  orange: 'rgb(255, 159, 64)',
+  yellow: 'rgb(255, 205, 86)',
+  green: 'rgb(75, 192, 192)',
+  blue: 'rgb(54, 162, 235)',
+  purple: 'rgb(153, 102, 255)',
+  grey: 'rgb(201, 203, 207)'
+};
+
 function minimum_rate_from_given_and_base(given_price, buy_price) {
   return 10000 * (given_price - 1) / buy_price;
 }
@@ -592,18 +603,102 @@ $(document).on("input", function() {
   }
 
   var output_possibilities = "";
+  var graph_min = [];
+  var graph_max = [];
   for (let poss of generate_possibilities(sell_prices)) {
     var out_line = "<tr><td>" + poss.pattern_description + "</td>"
     for (let day of [...poss.prices].slice(1)) {
       if (day.min != day.max) {
         out_line += "<td>" + day.min + ".." + day.max + "</td>"
+        graph_min.push(day.min);
+        graph_max.push(day.max);
+
       } else {
         out_line += "<td>" + day.min + "</td>"
+        graph_min.push(day.min);
+        graph_max.push(day.max);
       }
     }
     out_line += "</tr>"
     output_possibilities += out_line
+    // console.log(sell_prices.slice(1))
+    // console.log([...poss.prices].slice(1))
+    var test = [...poss.prices].slice(1)[7]['min']
+    console.log(Math.min(test))
+    // console.log(graph_min);
+    // console.log(graph_max);
   }
 
   $("#output").html(output_possibilities)
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Sun', 'Mon1', 'Mon2', 'Tue1', 'Tue2', 'Wed1','Wed2', 'Thu1', 'Thu2', 'Fri1', 'Fri2', 'Sat1', 'Sat2'],
+      datasets: [{
+        label: '真實價格',
+        backgroundColor: window.chartColors.green,
+        borderColor: window.chartColors.green,
+        data: sell_prices.slice(1),
+        fill: false,
+        spanGaps: true,
+        pointRadius: 4
+      },
+      {
+        label: 'Max',
+        backgroundColor: window.chartColors.yellow,
+        borderColor: window.chartColors.yellow,
+        data: graph_max,
+        fill: '1',
+      },
+      {
+        label: 'Min',
+        backgroundColor: window.chartColors.red,
+        borderColor: window.chartColors.red,
+        data: graph_min,
+        fill: false,
+      }
+      ]
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: false,
+        text: '大頭菜走勢圖'
+      },
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      scales: {
+        x: {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: '日期'
+          }
+        },
+        y: {
+          display: true,
+          scaleLabel: {
+            display: false,
+            labelString: '售價'
+          },
+          ticks: {
+            beginAtZero: true,
+            suggestedMax: 700,
+          }
+        }
+      }
+    }
+  });
 })
+
+
+
+
