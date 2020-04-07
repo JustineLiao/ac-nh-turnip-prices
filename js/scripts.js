@@ -110,7 +110,7 @@ $(document).on("input", function() {
         backgroundColor: window.chartColors.yellow,
         borderColor: window.chartColors.yellow,
         data: graph_max,
-        fill: '1',
+        fill: false,
       },
       {
         label: '預測下限',
@@ -150,7 +150,6 @@ $(document).on("input", function() {
             labelString: '售價'
           },
           ticks: {
-            // suggestedMin: 50,
             suggestedMax: 700,
             beginAtZero: true,
           }
