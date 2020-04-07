@@ -83,7 +83,7 @@ $(document).on("input", function() {
     // graph_max.push(poss.weekMax);
   }
   console.log(global_min_max)
-  for (var i = 0; i < global_min_max.length; i++){
+  for (var i = 1; i < global_min_max.length; i++){
     graph_min.push(global_min_max[i].min);
     graph_max.push(global_min_max[i].max);
   }
@@ -151,33 +151,15 @@ $(document).on("input", function() {
           },
           ticks: {
             // suggestedMin: 50,
-            suggestedMax: 700
+            suggestedMax: 700,
+            beginAtZero: true,
           }
         }]
       }
-      // scales: {
-      //   xAxes: {
-      //     display: true,
-      //     scaleLabel: {
-      //       display: true,
-      //       labelString: '日期'
-      //     }
-      //   },
-      //   yAxes: {
-      //     display: true,
-      //     scaleLabel: {
-      //       display: false,
-      //       labelString: '售價'
-      //     },
-      //     ticks: {
-      //       max: 700,
-      //       beginAtZero: true,
-      //     }
-      //   }
-      // }
     }
   });
 })
+
 
 
 
