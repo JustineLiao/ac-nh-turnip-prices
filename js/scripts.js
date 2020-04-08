@@ -66,8 +66,11 @@ $(document).on("input", function() {
   let output_possibilities = "";
   let graph_min = [];
   let graph_max = [];
+  let pattern_all = [];
+  let highest_price = 0;
 
   for (let poss of analyze_possibilities(sell_prices)) {
+    pattern_all.push(poss.pattern_number);
     var out_line = "<tr><td>" + poss.pattern_description + "</td>"
     for (let day of poss.prices.slice(1)) {
       if (day.min !== day.max) {
@@ -77,19 +80,40 @@ $(document).on("input", function() {
       }
     }
     out_line += `<td class="one">${poss.weekMax}</td></tr>`;
-    output_possibilities += out_line
-
+    output_possibilities += out_line;
+    highest_price = poss.weekMax;
     // graph_min.push(poss.weekMin);
     // graph_max.push(poss.weekMax);
   }
-  console.log(global_min_max)
+  console.log(global_min_max);
   for (var i = 1; i < global_min_max.length; i++){
     graph_min.push(global_min_max[i].min);
     graph_max.push(global_min_max[i].max);
   }
-  console.log(graph_max)
-  console.log(graph_min)
-  $("#output").html(output_possibilities)
+  console.log(graph_max);
+  console.log(graph_min);
+  const pattern_count = [];
+  let total_prob = pattern_all.length;
+  pattern_count[0] = pattern_all.filter(x => x === 0).length;
+  pattern_count[1] = pattern_all.filter(x => x === 1).length;
+  pattern_count[2] = pattern_all.filter(x => x === 2).length;
+  pattern_count[3] = pattern_all.filter(x => x === 3).length;
+  console.log(pattern_all);
+  console.log(total_prob);
+  const main_pattern = pattern_count.indexOf(Math.max(...pattern_count));
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  const main_pattern_prob = Math.round(pattern_count[main_pattern]*100 / pattern_count.reduce(reducer));
+  console.log(main_pattern);
+  console.log(main_pattern_prob);
+
+  var pattern_name_source = ['波型','三期型', '遞減型', '四期型'];
+  const main_pattern_name = pattern_name_source[main_pattern];
+  console.log(main_pattern_name);
+  $("#main_pattern_name").html(main_pattern_name);
+  $("#highest_price").html(highest_price);
+  $("#main_pattern_prob").html(main_pattern_prob);
+
+  $("#output").html(output_possibilities);
 
   var ctx = document.getElementById('myChart').getContext('2d');
   var myChart = new Chart(ctx, {

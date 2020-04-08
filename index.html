@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Animal Crossing Turnip Price Forecaster</title>
+  <title>動物森友會 大頭菜價格預測</title>
   <meta name="description" content="動物森友會 大頭菜價格預測">
   <meta name="author" content="Mike Bryant / Justine Liao">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -113,7 +113,28 @@
 
 <div class="container margin-top">
   <h3>預測結果</h3>
-  <canvas class="" id="myChart"></canvas>
+  <div class="row">
+        <div class="col-sm-6">
+        <div class="card text-center">
+          <div class="card-header bg-transparent">目前預測最可能走勢</div>
+          <div class="card-body text-primary">
+            <h5 class="card-title" id="main_pattern_name"></h5>
+            <p class="card-text" id="main_pattern_prob"></p>
+          </div>
+        </div>
+        </div>
+        <div class="col-sm-6">
+        <div class="card">
+          <div class="card-header bg-transparent text-center">最高可能價格</div>
+          <div class="card-body text-primary text-center">
+            <h5 class="card-title" id="highest_price"></h5>
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+  <canvas class="margin-top" id="myChart"></canvas>
 </div>
 <div class="container margin-top">
   <h3>詳細資訊</h3>
@@ -152,7 +173,6 @@
 
       </tbody>
     </table>
-    <p>以上是所有的預測組合，隨著紀錄菜價增加，可能的組合將會慢慢收斂。</p>
   </div>
   </div>
   <script src="js/predictions.js"></script>
