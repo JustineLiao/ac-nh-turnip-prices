@@ -86,10 +86,12 @@ $(document).on("input", function() {
     // graph_max.push(poss.weekMax);
   }
   console.log(global_min_max);
-  for (var i = 1; i < global_min_max.length; i++){
+
+  for (let i = 1; i < global_min_max.length; i++){
     graph_min.push(global_min_max[i].min);
     graph_max.push(global_min_max[i].max);
   }
+
   console.log(graph_max);
   console.log(graph_min);
   const pattern_count = [];
@@ -98,8 +100,8 @@ $(document).on("input", function() {
   pattern_count[1] = pattern_all.filter(x => x === 1).length;
   pattern_count[2] = pattern_all.filter(x => x === 2).length;
   pattern_count[3] = pattern_all.filter(x => x === 3).length;
-  console.log(pattern_all);
-  console.log(total_prob);
+  // console.log(pattern_all);
+  // console.log(total_prob);
   const main_pattern = pattern_count.indexOf(Math.max(...pattern_count));
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
   const main_pattern_prob = Math.round(pattern_count[main_pattern]*100 / pattern_count.reduce(reducer));
@@ -116,8 +118,11 @@ $(document).on("input", function() {
 
   $("#output").html(output_possibilities);
 
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var myChart = new Chart(ctx, {
+
+  let myChart;
+
+function drawChart(){
+  const config = {
     type: 'line',
     data: {
       labels: ['Sun', 'Mon1', 'Mon2', 'Tue1', 'Tue2', 'Wed1','Wed2', 'Thu1', 'Thu2', 'Fri1', 'Fri2', 'Sat1', 'Sat2'],
@@ -130,20 +135,20 @@ $(document).on("input", function() {
         spanGaps: true,
         pointRadius: 4
       },
-      {
-        label: '預測上限',
-        backgroundColor: window.chartColors.yellow,
-        borderColor: window.chartColors.yellow,
-        data: graph_max,
-        fill: false,
-      },
-      {
-        label: '預測下限',
-        backgroundColor: window.chartColors.red,
-        borderColor: window.chartColors.red,
-        data: graph_min,
-        fill: false,
-      }
+        {
+          label: '預測上限',
+          backgroundColor: window.chartColors.yellow,
+          borderColor: window.chartColors.yellow,
+          data: graph_max,
+          fill: false,
+        },
+        {
+          label: '預測下限',
+          backgroundColor: window.chartColors.red,
+          borderColor: window.chartColors.red,
+          data: graph_min,
+          fill: false,
+        }
       ]
     },
     options: {
@@ -181,8 +186,16 @@ $(document).on("input", function() {
         }]
       }
     }
-  });
-})
+  };
+  $('#myChart').remove(); // this is my <canvas> element
+  $('#graph_container').html('<canvas id="myChart"><canvas>');
+  const ctx = document.getElementById('myChart').getContext('2d');
+  myChart = new Chart(ctx, config);
+  // myChart.destroy();
+  // myChart = new Chart(ctx, config);
+}
+  drawChart();
+});
 
 
 
