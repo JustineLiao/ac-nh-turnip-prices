@@ -106,12 +106,13 @@ $(document).on("input", function() {
   console.log(main_pattern);
   console.log(main_pattern_prob);
 
+
   var pattern_name_source = ['波型','三期型', '遞減型', '四期型'];
   const main_pattern_name = pattern_name_source[main_pattern];
   console.log(main_pattern_name);
   $("#main_pattern_name").html(main_pattern_name);
   $("#highest_price").html(highest_price);
-  $("#main_pattern_prob").html(main_pattern_prob);
+  $("#main_pattern_prob").html(main_pattern_prob.toString() + "%");
 
   $("#output").html(output_possibilities);
 
