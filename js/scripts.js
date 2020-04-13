@@ -48,10 +48,10 @@ $(document).ready(function () {
 $(document).on("input", function() {
   // Update output on any input change
 
-  var buy_price = parseInt($("#buy").val());
+  const buy_price = parseInt($("#buy").val());
 
   var sell_prices = [buy_price, buy_price];
-  for (var i = 2; i < 14; i++) {
+  for (let i = 2; i < 14; i++) {
     sell_prices.push(parseInt($("#sell_" + i).val()));
   }
 
@@ -81,7 +81,9 @@ $(document).on("input", function() {
     }
     out_line += `<td class="one">${poss.weekMax}</td></tr>`;
     output_possibilities += out_line;
-    highest_price = poss.weekMax;
+    if (poss.pattern_number === 4){
+      highest_price = poss.weekMax;
+    }
     // graph_min.push(poss.weekMin);
     // graph_max.push(poss.weekMax);
   }
