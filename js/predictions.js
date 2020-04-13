@@ -588,14 +588,15 @@ function analyze_possibilities(sell_prices) {
         poss.weekMax = Math.max(...weekMaxes);
     }
 
-    generated_possibilities.sort((a, b) => {
-        if (a.pattern_number > b.pattern_number) {
-            return 1;
-        } else if (a.pattern_number < b.pattern_number) {
-            return -1;
-        } else {
-            return 0;
-        }
-    });
+    // generated_possibilities.sort((a, b) => {
+    //     if (a.weekMax < b.weekMax) {
+    //         return 1;
+    //     } else if (a.weekMax > b.weekMax) {
+    //         return -1;
+    //     } else {
+    //         return 0;
+    //     }
+    // });
+
     return generated_possibilities;
 }
